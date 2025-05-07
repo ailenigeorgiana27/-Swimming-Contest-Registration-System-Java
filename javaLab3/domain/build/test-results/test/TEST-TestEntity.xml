@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestEntity" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-03-17T13:46:13" hostname="PC" time="0.024">
+<testsuite name="TestEntity" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-03-23T17:36:00" hostname="PC" time="0.02">
   <properties/>
-  <testcase name="Test create Proba" classname="TestEntity" time="0.022"/>
-  <testcase name="Test create PersoanaOficiu" classname="TestEntity" time="0.001"/>
+  <testcase name="Test create Proba" classname="TestEntity" time="0.017"/>
+  <testcase name="Test create PersoanaOficiu" classname="TestEntity" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

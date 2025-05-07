@@ -1,14 +1,16 @@
 package ro.mpp2024.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-public class Participant extends Entity<Integer> {
+public class Participant extends Entity<Long> implements Serializable {
     private String name;
     private int age;
     private int nrProbe;
 
 
-    public Participant(String name, int age) {
+    public Participant(Long id,String name, int age) {
+        super(id);
         this.name = name;
         this.age = age;
 
@@ -34,5 +36,16 @@ public class Participant extends Entity<Integer> {
     @Override
     public String toString() {
         return "Participant{id=" + getId() + ", name=" + name + ", age=" + age + "}";
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(this.age, that.age) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 }

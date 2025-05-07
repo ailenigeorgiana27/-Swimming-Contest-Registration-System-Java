@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="ro.mpp2024.domain">
+    <class name="Proba" table="Proba">
+        <id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+        <property name="distanta" column="distance" type="java.lang.Float"></property>
+        <property name="stil" column="stil" type="java.lang.String"></property>
+    </class>
+</hibernate-mapping>

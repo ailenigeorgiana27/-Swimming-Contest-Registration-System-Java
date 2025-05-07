@@ -3,15 +3,15 @@ package ro.mpp2024;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.time.LocalDateTime;
 import java.util.Properties;
 
 import ro.mpp2024.repo.*;
 import ro.mpp2024.domain.Entity;
 import ro.mpp2024.domain.Inscriere;
-
-
-
+import ro.mpp2024.repo.database.InscriereDbRepo;
+import ro.mpp2024.repo.database.ParticipantDbRepo;
+import ro.mpp2024.repo.database.PersoanaOficiuDbRepo;
+import ro.mpp2024.repo.database.ProbaDbRepo;
 
 
 public class Main {
@@ -22,6 +22,7 @@ public class Main {
         var probaRepo = new ProbaDbRepo(properties);
         var inscriereRepo = new InscriereDbRepo(properties, participantRepo, probaRepo);
         try{
+            System.out.println("am ajuns aici");
             inscriereRepo.add(new Inscriere(participantRepo.getById(1), probaRepo.getById(1) ));
             show(persoanaOficiuRepo);
             show(participantRepo);

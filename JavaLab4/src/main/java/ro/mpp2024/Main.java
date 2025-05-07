@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import java.util.Properties;
 
+import ro.mpp2024.domain.PersoanaOficiu;
 import ro.mpp2024.repo.*;
 import ro.mpp2024.domain.Entity;
 import ro.mpp2024.domain.Inscriere;
@@ -12,6 +13,7 @@ import ro.mpp2024.repo.database.InscriereDbRepo;
 import ro.mpp2024.repo.database.ParticipantDbRepo;
 import ro.mpp2024.repo.database.PersoanaOficiuDbRepo;
 import ro.mpp2024.repo.database.ProbaDbRepo;
+import ro.mpp2024.repo.utils.PasswordUtil;
 
 
 public class Main {
@@ -22,9 +24,15 @@ public class Main {
         var probaRepo = new ProbaDbRepo(properties);
         var inscriereRepo = new InscriereDbRepo(properties, participantRepo, probaRepo);
         try{
+            persoanaOficiuRepo.add(new PersoanaOficiu("georgiana@icloud.com", PasswordUtil.hashPassword("123456")));
+        }
+        catch(EntityRepoException e){
+            throw new RuntimeException(e);
+        }
+        try{
             System.out.println("am ajuns aici");
-            inscriereRepo.add(new Inscriere(participantRepo.getById(1), probaRepo.getById(1) ));
-            show(persoanaOficiuRepo);
+            inscriereRepo.add(new Inscriere(participantRepo.getById(2), probaRepo.getById(3) ));
+            showWithMaskedPasswords(persoanaOficiuRepo);
             show(participantRepo);
             show(probaRepo);
             show(inscriereRepo);
@@ -45,5 +53,11 @@ public class Main {
             System.out.println("Cannot find bd.config" + e);
         }
         return properties;
+    }
+    public static void showWithMaskedPasswords(PersoanaOficiuDbRepo repo) throws EntityRepoException {
+        for (PersoanaOficiu persoana : repo.getAll()) {
+            String maskedPassword = "●".repeat(10); // Afișează 10 buline negre indiferent de lungimea reală
+            System.out.println("PersoanaOficiu { email=" + persoana.getUsername() + ", password=" + maskedPassword + " }");
+        }
     }
 }

@@ -5,5 +5,9 @@ include 'Services'
 include 'Server'
 include 'Networking'
 include 'ClientFX'
-
+include 'Persistance'
+include 'Server'
+include 'Services'
+include 'Network'
+include 'Client'
 

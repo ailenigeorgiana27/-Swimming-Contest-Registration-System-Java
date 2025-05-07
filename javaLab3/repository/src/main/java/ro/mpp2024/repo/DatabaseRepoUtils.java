@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ro.mpp2024.domain.Entity;
+import ro.mpp2024.repo.utils.JdbcUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

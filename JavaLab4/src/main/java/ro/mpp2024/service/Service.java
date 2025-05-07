@@ -46,7 +46,10 @@ public class Service {
         }
     }
 
-
+    public void updateNrParticipants(Proba proba) throws EntityRepoException {
+        List<Inscriere> inscriereList = inscriereRepo.getInscrierePentruProba(proba);
+        proba.setNrParticipants(inscriereList.size());
+    }
 
     public Participant saveParticipant(Participant participant) throws EntityRepoException {
         Optional<Inscriere> saved = participantRepo.add(participant);

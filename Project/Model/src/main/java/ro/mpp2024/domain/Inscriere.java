@@ -1,8 +1,9 @@
 package ro.mpp2024.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-public class Inscriere extends Entity<Integer>  {
+public class Inscriere extends Entity<Long>  {
 
     private Participant participant;
 
@@ -13,7 +14,8 @@ public class Inscriere extends Entity<Integer>  {
     public void setProba(Proba p) {
         this.proba = p;
     }
-    public Inscriere(Participant participant, Proba proba) {
+    public Inscriere(Long id,Participant participant, Proba proba) {
+        super(id);
         this.participant = participant;
         this.proba = proba;
     }
@@ -24,5 +26,16 @@ public class Inscriere extends Entity<Integer>  {
    public void setParticipant(Participant p) {
         this.participant = p;
    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Inscriere that = (Inscriere) o;
+        return Objects.equals(proba, that.proba) && Objects.equals(participant, that.participant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(proba, participant);
+    }
 
 }

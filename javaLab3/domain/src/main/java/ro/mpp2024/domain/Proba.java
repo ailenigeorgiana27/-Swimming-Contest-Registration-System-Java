@@ -3,12 +3,12 @@ package ro.mpp2024.domain;
 public class Proba extends Entity<Integer>{
     private String distance;
     private String stil;
-    private int nrParticipants;
+    private Integer nrParticipants;
 
-    public Proba(String distance, String stil, int nrParticipants) {
+    public Proba(String distance, String stil) {
         this.distance = distance;
         this.stil = stil;
-        this.nrParticipants = nrParticipants;
+
     }
     public String getDistance() {
         return distance;
@@ -22,10 +22,11 @@ public class Proba extends Entity<Integer>{
     public void setStil(String stil) {
         this.stil = stil;
     }
-    public int getNrParticipants() {
+    public Integer getNrParticipants() {
         return nrParticipants;
     }
-    public void setNrParticipants(int nrParticipants) {
+    public void setNrParticipants(Integer nrParticipants) {
         this.nrParticipants = nrParticipants;
     }
+
 }

@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package concurs;
+
+import "google/protobuf/empty.proto";
+
+option java_package = "ro.mpp2024.client.grpc";
+option csharp_namespace = "Org.Example.Client.Grpc";
+
+// DTO-uri
+
+message UserDTO {
+  int64 id = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message ProbaDTO {
+  int64 id = 1;
+  int32 distanta = 2;
+  string stil = 3;
+  int32 participants = 4;
+}
+
+message ParticipantDTO {
+  int64 id = 1;
+  int32 age = 2;
+  string name = 3;
+  int32 noProbe = 4;
+}
+
+message InscriereDTO {
+  int64 id = 1;
+  int32 age = 2;
+  string name = 3;
+  repeated int64 probaIds = 4;
+}
+
+message StyleDistanceDTO {
+  string stil = 1;
+  int32 distanta = 2;
+}
+
+message ParticipantList {
+  repeated ParticipantDTO participants = 1;
+}
+
+message ProbaList {
+  repeated ProbaDTO probe = 1;
+}
+
+message ProbaCountEntry {
+  ProbaDTO proba = 1;
+  int32 nrParticipanti = 2;
+}
+
+message ProbaCountList {
+  repeated ProbaCountEntry entries = 1;
+}
+
+message CountResponse {
+  int32 count = 1;
+}
+
+message DefaultResponse {
+  oneof result {
+    bool success = 1;
+    string error = 2;
+  }
+}
+message ProbaRequest {
+  string stil = 1;
+  int32 distanta = 2;
+}
+
+message ParticipantResponse {
+  repeated ParticipantDTO participants = 1;
+}
+
+message ProbeResponse {
+  repeated ProbaDTO probe = 1;
+}
+
+message ParticipantIdRequest {
+  int64 id = 1;
+}
+
+message NrProbeResponse {
+  int32 nr = 1;
+}
+
+message UpdateNotification {
+  ParticipantDTO participant = 1;
+  repeated int64 probaIds = 2;
+}
+message Notification {
+  string message = 1;
+}
+
+// Serviciul principal
+service ConcursService {
+  rpc Login(UserDTO) returns (DefaultResponse);
+  rpc Logout(UserDTO) returns (DefaultResponse);
+
+  rpc AddInscriere(InscriereDTO) returns (DefaultResponse);
+
+  rpc GetParticipantsByStyleDistance(StyleDistanceDTO) returns (ParticipantList);
+  rpc GetParticipantProbeCount(UserDTO) returns (CountResponse);
+
+  rpc GetAllProbe(google.protobuf.Empty) returns (ProbaList);
+  rpc GetProbeWithCounts(google.protobuf.Empty) returns (ProbaCountList);
+}
+
+// Serviciu pentru notificări
+service NotificationService {
+  rpc ParticipantInscris(google.protobuf.Empty) returns (stream Notification);
+}

@@ -1,49 +1,40 @@
 package ro.mpp2024.domain;
 
-import ro.mpp2024.domain.enums.Stil;
+
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Proba extends Entity<Integer>{
-    private float distanta;
-    private Stil stil;
-    private int nrParticipants;
 
-    public Proba(float distanta, Stil stil) {
+public class Proba extends Entity<Long> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private int distanta;
+    private String stil;
+
+
+    public Proba(Long id,int distanta, String stil) {
+        super(id);
         this.distanta = distanta;
         this.stil = stil;
     }
 
-    public Proba(int id,float distanta, Stil stil) {
-        this.setId(id);
-        this.distanta = distanta;
-        this.stil = stil;
-    }
-    public int getNrParticipants() {
-        return nrParticipants;
-    }
-    public void setNrParticipants(int nrParticipants) {
-        this.nrParticipants = nrParticipants;
-    }
 
-    public Proba() {
 
-    }
 
-    public float getDistanta() {
+    public int getDistanta() {
         return distanta;
     }
 
-    public void setDistanta(float distanta) {
+    public void setDistanta(int distanta) {
         this.distanta = distanta;
     }
 
-    public Stil getStil() {
+    public String getStil() {
         return stil;
     }
 
-    public void setStil(Stil stil) {
+    public void setStil(String stil) {
         this.stil = stil;
     }
 
@@ -53,6 +44,17 @@ public class Proba extends Entity<Integer>{
                 "distanta=" + distanta +
                 ", stil=" + stil +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Proba that = (Proba) o;
+        return Objects.equals(distanta, that.distanta) && Objects.equals(stil, that.stil);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(distanta, stil);
     }
 
 }
