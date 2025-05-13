@@ -51,21 +51,4 @@ Aplicația are o arhitectură **client-server** și folosește **socket-uri și 
 
 ---
 
-## Structura proiectului
 
-```plaintext
-/Proiect_Inot
-│
-├── Server/
-│   ├── src/
-│   ├── config/
-│   └── logs/
-│
-├── Client/
-│   ├── src/
-│   ├── resources/
-│   └── ui/
-│
-├── README.md
-└── database/
-    └── schema.sql
