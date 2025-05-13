@@ -1,54 +1,100 @@
-# Aplicație Desktop pentru Înscrierea Participanților la Concursuri de Înot
+# 🏊 Swimming Contest Registration System
 
-## Descriere generală
+## 📘 Overview
 
-Această aplicație este folosită de către organizatorii unui concurs de înot pentru a gestiona **înscrierea participanților** din mai multe oficii din țară. Aplicația este disponibilă în două variante:
+This application is used by the organizers of a national swimming contest to register participants from various local offices. It is implemented in **two interchangeable versions**:
 
-- **Server Java + Client C#**
-- **Server C# + Client Java**
+- **Java server + C# clients**
+- **C# server + Java clients**
 
-Aplicația are o arhitectură **client-server** și folosește **socket-uri și thread-uri** pentru comunicarea în rețea. Notificarea automată a clienților se realizează la fiecare actualizare a datelor.
+Communication between clients and server is done via **multithreaded TCP sockets**, with optional **gRPC integration** for modern and efficient RPC-based interaction.
 
 ---
 
-## Funcționalități principale
+## 🎯 Core Features
 
-1. **Autentificare (Login)**
-   - Fiecare operator se loghează în aplicație.
-   - După login, se afișează lista probelor (stil + distanță) și numărul actual de participanți.
+1. **Login**
+   - Office staff log into the system.
+   - After login, a new window displays all available swimming events (distance & style) along with the current number of registered participants per event.
 
-2. **Căutare participanți**
-   - După autentificare, operatorul poate căuta participanții la o anumită probă.
-   - Se afișează: nume, vârstă, număr de probe la care participă fiecare.
+2. **Search Participants**
+   - After login, staff can search for participants registered in a specific event.
+   - Displayed information: participant's name, age, and number of events registered for.
 
-3. **Înscriere participant**
-   - Un participant poate fi înscris la una sau mai multe probe.
-   - După înscriere, toți ceilalți clienți sunt notificați automat pentru a actualiza datele afișate.
+3. **Register Participant**
+   - A participant can register for multiple events.
+   - Staff enter participant's name, age, and the selected events.
+   - Once registered, all other clients across the country receive automatic updates reflecting the new data.
 
 4. **Logout**
-   - Deconectarea de la sistem.
+   - The user logs out of the system.
 
 ---
 
-## Tehnologii utilizate
+## 🏗️ Architecture
 
-### 📦 Back-end (Java/C#)
-- Persistență cu **baze de date relaționale** (MySQL / PostgreSQL)
-- **Repository Pattern** pentru manipularea datelor
-- **Fișier de configurare** pentru datele de conectare la baza de date
-- **Jurnalizare (Logging)** pentru clasele din repository
-- **ORM**:
-  - Java: Hibernate
-  - C#: Entity Framework
-
-### 💻 Interfață grafică (JavaFX / Windows Forms)
-- Controller-ul GUI apelează serviciile
-- Serviciile comunică cu repository-urile
-
-### 🌐 Networking
-- Implementat folosind **Socket-uri TCP** și **Thread-uri** pentru multi-client handling
-- **Notificare automată** a clienților la actualizări
+- **Client-Server** application with TCP Socket-based communication (multi-threaded)
+- **Relational database** for persistent storage
+- Follows the **MVC pattern**, using:
+  - **Model**: domain entities (Participant, Event, Registration, etc.)
+  - **Repository layer**: handles data access using SQL/ORM
+  - **Service layer**: handles business logic
+  - **Controller/UI layer**: interacts with services
+- Connection settings are stored in a **configuration file**
+- **Logging** is implemented for the repository layer
 
 ---
+
+## 🔧 Technologies Used
+
+### Back-End
+
+| Java Version                         | C# Version                          |
+|-------------------------------------|-------------------------------------|
+| JDBC / Hibernate (ORM)              | ADO.NET / Entity Framework (ORM)    |
+| Java Sockets                         | .NET Sockets                        |
+| Java Properties file for config     | appsettings.json for config         |
+| SLF4J / Logback for logging         | Serilog / NLog for logging          |
+
+### Front-End
+
+| Java Version (Client)               | C# Version (Client)                 |
+|-------------------------------------|-------------------------------------|
+| JavaFX UI                           | Windows Forms / WPF                 |
+| MVC-based GUI controller            | MVVM/MVC-based GUI controller       |
+
+---
+
+## 🌐 Networking
+
+- Implemented using low-level **TCP sockets**
+- The server can handle multiple clients simultaneously using **threads**
+- **Client notification mechanism** ensures that all UI instances reflect real-time updates (e.g., new registration updates participant counts instantly)
+
+---
+
+## 🔄 gRPC Integration (Bonus Requirement)
+
+As a bonus enhancement, gRPC is used to modernize part of the client-server communication.
+
+### Why gRPC?
+
+- Enables **fast and type-safe** remote calls using Protocol Buffers
+- Supports **language interoperability** (Java ↔ C#)
+- Scales better than raw sockets for structured data exchange
+
+### Implementation Notes
+
+- A gRPC service is defined via `.proto` files (shared between client and server)
+- At least two domain entities are exposed via gRPC (e.g., `ParticipantService`, `EventService`)
+- Server implements the gRPC services
+- Client consumes those services to:
+  - Retrieve available events
+  - Register participants remotely
+
+> gRPC is used **alongside** the socket-based implementation for selected use cases, especially where binary performance and schema consistency matter.
+
+---
+
 
 
