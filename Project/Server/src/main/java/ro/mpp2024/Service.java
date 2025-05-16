@@ -7,6 +7,7 @@ import ro.mpp2024.domain.Participant;
 import ro.mpp2024.domain.PersoanaOficiu;
 import ro.mpp2024.domain.Proba;
 import ro.mpp2024.domain.Validators.ParticipantValidator;
+import ro.mpp2024.orm.ParticipantRepoORM;
 import ro.mpp2024.service.IObserver;
 import ro.mpp2024.service.IService;
 import ro.mpp2024.service.ServiceException;
@@ -84,23 +85,37 @@ public class Service implements IService {
 
 
     public synchronized void inscriereParticipant(Participant participant, ArrayList<Proba> probe){
-        if(probe.isEmpty())
+        if (probe.isEmpty())
             throw new ServiceException("Participantul nu a fost inscris la nicio proba!");
 
-        else {
-            if(!participantRepository.save(participant).isPresent()) {
-                Long id = participantRepository.getMaxParticipantId();
-                participant.setId(id);
-            }
-            else{
-                throw new ServiceException("Participantul este deja inscris!");
-            }
-            probe.forEach(proba -> {
-                participareRepository.save(new Inscriere(null, participant, proba));
-            });
-            notifyAllClients(participant, probe);
+        // caută după nume + vârstă
+        Optional<Participant> existingOpt = participantRepository.findByNameAndAge(participant.getName(), participant.getAge());
+
+        Participant savedParticipant;
+        if (existingOpt.isPresent()) {
+            savedParticipant = existingOpt.get();
+        } else {
+            participantRepository.save(participant);
+            Long id = participantRepository.getMaxParticipantId();
+            participant.setId(id);
+            savedParticipant = participant;
         }
+
+        for (Proba proba : probe) {
+            List<Participant> participantiLaProba = participareRepository.findParticipantiByProba(proba.getId());
+            boolean dejaInscris = participantiLaProba.stream()
+                    .anyMatch(p -> Objects.equals(p.getId(), savedParticipant.getId()));
+            if (dejaInscris) {
+                throw new ServiceException("Participantul este deja inscris la proba " + proba.getStil() + " - " + proba.getDistanta());
+            }
+
+            participareRepository.save(new Inscriere(null, savedParticipant, proba));
+        }
+
+        notifyAllClients(savedParticipant, probe);
     }
+
+
 
     public int getNoParticipantiByProba(Long idProba){
         return participareRepository.findNoOfParticipanti(idProba);

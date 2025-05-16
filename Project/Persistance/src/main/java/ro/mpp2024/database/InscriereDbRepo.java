@@ -97,8 +97,8 @@ public class InscriereDbRepo implements IInscriereRepo {
     public Optional<Inscriere> save(Inscriere entity) {
         Connection con = dbUtils.getConnection();
         try (var statement = con.prepareStatement("insert into Inscriere (proba, participant) values (?, ?)")) {
-            statement.setLong(1, entity.getParticipant().getId());
-            statement.setLong(2, entity.getProba().getId());
+            statement.setLong(2, entity.getParticipant().getId());
+            statement.setLong(1, entity.getProba().getId());
             statement.executeUpdate();
             return Optional.empty();
         } catch (Exception e) {

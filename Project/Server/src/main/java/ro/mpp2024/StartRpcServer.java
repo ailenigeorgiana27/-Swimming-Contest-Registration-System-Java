@@ -1,7 +1,5 @@
 package ro.mpp2024;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Properties;
@@ -9,10 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.mpp2024.database.InscriereDbRepo;
 
-import ro.mpp2024.database.PersoanaOficiuDbRepo;
-
+import ro.mpp2024.database.ProbaDbRepo;
 import ro.mpp2024.orm.ParticipantRepoORM;
-import ro.mpp2024.orm.ProbaRepoORM;
+import ro.mpp2024.orm.PersoanaOficiuRepoORM;
 import ro.mpp2024.rpcProtocol.ClientRpcWorker;
 import ro.mpp2024.utils.AbsConcurrentServer;
 import ro.mpp2024.utils.ServerException;
@@ -41,11 +38,15 @@ public class StartRpcServer {
 
 
 
+        //PersoanaOficiuDbRepo oficiuDBRepository = new PersoanaOficiuDbRepo(props);
+        //ParticipantDbRepo participantRepository = new ParticipantDbRepo(props);
+        ProbaDbRepo probaRepository = new ProbaDbRepo(props);
 
-        PersoanaOficiuDbRepo oficiuDBRepository = new PersoanaOficiuDbRepo(props);
+        PersoanaOficiuRepoORM oficiuDBRepository = new PersoanaOficiuRepoORM();
         ParticipantRepoORM participantRepository = new ParticipantRepoORM();
-        ProbaRepoORM probaRepository = new ProbaRepoORM();
+        //ProbaRepoORM probaRepository = new ProbaRepoORM();
         InscriereDbRepo participareDBRepository = new InscriereDbRepo(props, participantRepository, probaRepository);
+        //InscriereRepoORM participareDBRepository = new InscriereRepoORM(participantRepository, probaRepository);
         Service service = new Service(participantRepository, probaRepository, participareDBRepository, oficiuDBRepository);
 
         AbsConcurrentServer server = new AbsConcurrentServer(serverPort) {

@@ -1,16 +1,24 @@
 package ro.mpp2024.domain;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@jakarta.persistence.Entity
+@Table(name="Participant")
 public class Participant extends Entity<Long> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private int age;
-    private int nrProbe;
 
-
+    public Participant() {}
     public Participant(Long id,String name, int age) {
-        super(id);
+        this.setId(id);
         this.name = name;
         this.age = age;
 
@@ -27,12 +35,7 @@ public class Participant extends Entity<Long> implements Serializable {
     public void setAge(int age) {
         this.age = age;
     }
-    public int getNrProbe() {
-        return nrProbe;
-    }
-    public void setNrProbe(int nrProbe) {
-        this.nrProbe = nrProbe;
-    }
+
     @Override
     public String toString() {
         return "Participant{id=" + getId() + ", name=" + name + ", age=" + age + "}";

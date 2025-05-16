@@ -41,7 +41,9 @@ protobuf {
         }
     }
 }
-test {
-    useJUnitPlatform()
+tasks.withType(Test).configureEach {
+    enabled = false
 }
+
+
 

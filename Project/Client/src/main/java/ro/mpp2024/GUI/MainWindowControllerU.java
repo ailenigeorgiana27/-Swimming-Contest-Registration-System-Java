@@ -124,6 +124,8 @@ public class MainWindowControllerU implements IObserver {
         searchBtn.setOnAction(e -> handleSearch());
         registerBtn.setOnAction(e -> handleRegister());
         logoutBtn.setOnAction(e -> handleLogout(e));
+        refreshTables();
+
     }
 
     public void refreshTables() {
@@ -208,9 +210,8 @@ public class MainWindowControllerU implements IObserver {
     public void update(Participant participant, ArrayList<Proba> probes) throws Exception {
         try {
             for (Proba p : probes)
-                probe.put(p, probe.get(p) + 1);
+                probe.put(p, probe.get(p) + 1);  // << ACTUALIZEZI DOAR LOCAL
             probaTable.setItems(FXCollections.observableArrayList(probe.keySet()));
-
             if (styleCombo.getValue() != null && distanceCombo.getValue() != null) {
                 Proba sel = new Proba(0L, distanceCombo.getValue(), styleCombo.getValue());
                 if (probes.contains(sel)) {
@@ -226,6 +227,7 @@ public class MainWindowControllerU implements IObserver {
     }
 
 
-
-
 }
+
+
+

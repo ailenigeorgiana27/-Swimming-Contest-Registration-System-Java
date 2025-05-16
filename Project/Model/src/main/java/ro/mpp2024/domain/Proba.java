@@ -2,19 +2,26 @@ package ro.mpp2024.domain;
 
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@jakarta.persistence.Entity
+@Table(name="Proba")
 public class Proba extends Entity<Long> implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Column(nullable = false)
     private int distanta;
+    @Column(nullable = false)
     private String stil;
 
 
+    public Proba() {}
     public Proba(Long id,int distanta, String stil) {
-        super(id);
+        this.setId(id);
         this.distanta = distanta;
         this.stil = stil;
     }

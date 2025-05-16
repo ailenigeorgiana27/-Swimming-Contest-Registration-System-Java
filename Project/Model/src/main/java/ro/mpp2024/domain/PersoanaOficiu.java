@@ -1,17 +1,25 @@
 package ro.mpp2024.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PersoanaOficiu extends Entity<Long>  implements Serializable{
+@jakarta.persistence.Entity
+@Table(name="PersoanaOficiu")
+public class PersoanaOficiu extends Entity<Long>{
+    @Column(nullable=false)
     private String username;
+    @Column(nullable=false)
     private String password;
 
     public PersoanaOficiu(Long id, String username, String password) {
-        super(id);
+        this.setId(id);
         this.username = username;
         this.password = password;
     }
+    public PersoanaOficiu() {}
 
     public String getUsername() {
         return username;

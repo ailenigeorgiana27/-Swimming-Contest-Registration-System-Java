@@ -1,84 +1,59 @@
 package ro.mpp2024.orm;
 
-
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ro.mpp2024.IParticipantRepo;
 import ro.mpp2024.domain.Participant;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Properties;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class ParticipantRepoORM implements IParticipantRepo {
-    private static SessionFactory sessionFactory;
 
-    // Constructorul inițializator al repo-ului
-    public ParticipantRepoORM() {
-        initialize();
-    }
-
-    static void initialize() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // se configurează folosind hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    public Optional<Participant> findByNameAndAge(String name, int age) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Participant where name = :name and age = :age", Participant.class)
+                    .setParameter("name", name)
+                    .setParameter("age", age)
+                    .uniqueResultOptional();
         } catch (Exception e) {
-            System.err.println("Exceptie: " + e);
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-    }
-
-    static void close() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
+            System.err.println("Eroare la căutarea după nume și vârstă: " + e);
+            return Optional.empty();
         }
     }
 
     @Override
     public Optional<Participant> findOne(Long id) {
-        Participant participant = null;
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            participant = session.get(Participant.class, id);
-            session.getTransaction().commit();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(
+                    session.createSelectionQuery("from Participant where id = :id", Participant.class)
+                            .setParameter("id", id)
+                            .getSingleResultOrNull()
+            );
+        } catch (Exception e) {
+            System.err.println("Eroare la căutarea participantului cu ID-ul " + id + ": " + e);
+            return Optional.empty();
         }
-        if (participant != null)
-            System.out.println("Găsit: " + participant);
-        else
-            System.out.println("Participant inexistent cu id " + id);
-
-        return Optional.ofNullable(participant);
     }
 
     @Override
     public List<Participant> findAll() {
-        List<Participant> participants;
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Stream<Participant> stream = session.createQuery("from Participant", Participant.class).stream();
-            participants = StreamSupport.stream(stream.spliterator(), false).toList();
-            session.getTransaction().commit();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Participant", Participant.class).getResultList();
+        } catch (Exception e) {
+            System.err.println("Eroare la obținerea participanților: " + e);
+            return List.of();
         }
-
-        System.out.println("Toți participanții: " + participants);
-        participants.forEach(System.out::println);
-        return participants;
     }
 
     @Override
     public Optional<Participant> save(Participant entity) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.save(entity);
-            session.getTransaction().commit();
+        try {
+
+            HibernateUtil.getSessionFactory().inTransaction(session -> {
+                session.persist(entity);
+                session.flush();
+            });
             return Optional.empty();
         } catch (Exception e) {
             System.err.println("Eroare la salvarea participantului: " + e);
@@ -87,47 +62,52 @@ public class ParticipantRepoORM implements IParticipantRepo {
     }
 
     @Override
-    public Optional<Participant> update(Participant entity) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction tx = null;
-            try {
-                tx = session.beginTransaction();
-                Participant participant = session.load(Participant.class, entity.getId());
-                participant.setName(entity.getName());
-                participant.setAge(entity.getAge());
-                session.update(participant);
-                tx.commit();
-            } catch (RuntimeException ex) {
-                System.err.println("Eroare la update: " + ex);
-                if (tx != null) tx.rollback();
-            }
+    public Optional<Participant> delete(Long id) {
+        try {
+            final Participant[] deleted = new Participant[1];
+            HibernateUtil.getSessionFactory().inTransaction(session -> {
+                Participant participant = session.find(Participant.class, id);
+                if (participant != null) {
+                    session.remove(participant);
+                    session.flush();
+                    deleted[0] = participant;
+                }
+            });
+            return Optional.ofNullable(deleted[0]);
+        } catch (Exception e) {
+            System.err.println("Eroare la ștergerea participantului: " + e);
+            return Optional.empty();
         }
-
-        return Optional.empty();
     }
 
     @Override
-    public Optional<Participant> delete(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Participant participant = session.load(Participant.class, id);
-            if (participant != null) {
-                session.delete(participant);
-            }
-            session.getTransaction().commit();
+    public Optional<Participant> update(Participant entity) {
+        try {
+            final boolean[] updated = {false};
+            HibernateUtil.getSessionFactory().inTransaction(session -> {
+                Participant existing = session.find(Participant.class, entity.getId());
+                if (!Objects.isNull(existing)) {
+                    existing.setName(entity.getName());
+                    existing.setAge(entity.getAge());
+                    session.merge(existing);
+                    session.flush();
+                    updated[0] = true;
+                }
+            });
+            return updated[0] ? Optional.empty() : Optional.of(entity);
+        } catch (Exception e) {
+            System.err.println("Eroare la actualizarea participantului: " + e);
+            return Optional.of(entity);
         }
-        return Optional.empty();
     }
 
     @Override
     public Long getMaxParticipantId() {
-        Long id = null;
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            id = (Long) session.createQuery("select max(id) from Participant").uniqueResult();
-            session.getTransaction().commit();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("select max(id) from Participant", Long.class).uniqueResult();
+        } catch (Exception e) {
+            System.err.println("Eroare la obținerea ID-ului maxim: " + e);
+            return null;
         }
-        return id;
     }
 }
-

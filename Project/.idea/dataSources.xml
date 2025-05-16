@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="inot" uuid="73c06de6-c941-4bad-a7ca-bc0bd2cfe860">
+    <data-source source="LOCAL" name="server" uuid="9bb64350-79f6-4879-a6eb-5a5a65c6d096">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>jdbc.properties
 
 C:/Users/Personal PC/Videos/UBB Info/an2/an2 sem1/metode avansate de programare/teme-lab-ailenigeorgiana27/Project/Server/src/main/resources/server.properties</remarks>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../inot.db</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="server" uuid="b2504a3e-ff9f-408a-81eb-85d1a3f9a5e6">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>jdbc.properties
-
-C:/Users/Personal PC/Videos/UBB Info/an2/an2 sem1/metode avansate de programare/teme-lab-ailenigeorgiana27/Project/Server/src/main/resources/server.properties</remarks>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../inot.db</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="c85fa734-b892-4e2e-89ee-157103c964a9">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>Hibernate
-
-C:/Users/Personal PC/Videos/UBB Info/an2/an2 sem1/metode avansate de programare/teme-lab-ailenigeorgiana27/Project/Persistance/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../inot.db</jdbc-url>
       <jdbc-additional-properties>
