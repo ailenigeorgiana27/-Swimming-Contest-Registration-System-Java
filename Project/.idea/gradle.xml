@@ -10,16 +10,26 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Client" />
-            <option value="$PROJECT_DIR$/ClientFX" />
             <option value="$PROJECT_DIR$/Model" />
             <option value="$PROJECT_DIR$/Network" />
-            <option value="$PROJECT_DIR$/Networking" />
             <option value="$PROJECT_DIR$/Persistance" />
-            <option value="$PROJECT_DIR$/Persistence" />
+            <option value="$PROJECT_DIR$/RestComponents" />
+            <option value="$PROJECT_DIR$/RestService" />
             <option value="$PROJECT_DIR$/Server" />
             <option value="$PROJECT_DIR$/Services" />
           </set>
         </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/RestComponent" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/RestComponent" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/RestServices" />
       </GradleProjectSettings>
     </option>
   </component>

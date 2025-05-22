@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.mpp2024.database.InscriereDbRepo;
 
+import ro.mpp2024.database.PersoanaOficiuDbRepo;
 import ro.mpp2024.database.ProbaDbRepo;
 import ro.mpp2024.orm.ParticipantRepoORM;
 import ro.mpp2024.orm.PersoanaOficiuRepoORM;
@@ -44,9 +45,7 @@ public class StartRpcServer {
 
         PersoanaOficiuRepoORM oficiuDBRepository = new PersoanaOficiuRepoORM();
         ParticipantRepoORM participantRepository = new ParticipantRepoORM();
-        //ProbaRepoORM probaRepository = new ProbaRepoORM();
         InscriereDbRepo participareDBRepository = new InscriereDbRepo(props, participantRepository, probaRepository);
-        //InscriereRepoORM participareDBRepository = new InscriereRepoORM(participantRepository, probaRepository);
         Service service = new Service(participantRepository, probaRepository, participareDBRepository, oficiuDBRepository);
 
         AbsConcurrentServer server = new AbsConcurrentServer(serverPort) {

@@ -1,11 +1,10 @@
-package ro.mpp2024.orm;
+package ro.mpp2024.utils;
 
 
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import org.hibernate.cfg.Configuration;
 import ro.mpp2024.domain.Inscriere;
 import ro.mpp2024.domain.Participant;
 import ro.mpp2024.domain.PersoanaOficiu;

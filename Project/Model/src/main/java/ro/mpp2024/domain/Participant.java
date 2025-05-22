@@ -8,6 +8,7 @@ import java.util.Objects;
 @jakarta.persistence.Entity
 @Table(name="Participant")
 public class Participant extends Entity<Long> implements Serializable {
+    @Column(nullable=false)
     private static final long serialVersionUID = 1L;
 
 

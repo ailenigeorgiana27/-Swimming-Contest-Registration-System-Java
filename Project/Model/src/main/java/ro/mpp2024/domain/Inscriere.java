@@ -1,9 +1,6 @@
 package ro.mpp2024.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,11 +9,11 @@ import java.util.Objects;
 @Table(name="Inscriere")
 public class Inscriere extends Entity<Long>  {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="participant", nullable=false)
     private Participant participant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="proba", nullable=false)
     private Proba proba;
     public Proba getProba() {

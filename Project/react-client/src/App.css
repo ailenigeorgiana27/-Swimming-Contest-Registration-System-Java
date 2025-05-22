@@ -1,0 +1,24 @@
+/* Container principal pentru layout-ul dintre tabel și formular */
+.ProbaDiv {
+    display: flex;
+    justify-content: space-between; /* Elemente la capete */
+    align-items: flex-start;        /* Aliniere verticală sus */
+    gap: 1rem;                      /* Spațiu între ele */
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Stil general pentru pagină */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Titlu sau antet */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 2rem;
+}

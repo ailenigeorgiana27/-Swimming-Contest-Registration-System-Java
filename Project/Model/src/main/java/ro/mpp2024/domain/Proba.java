@@ -11,6 +11,7 @@ import java.util.Objects;
 @jakarta.persistence.Entity
 @Table(name="Proba")
 public class Proba extends Entity<Long> implements Serializable {
+    @Column(nullable = false)
     private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)

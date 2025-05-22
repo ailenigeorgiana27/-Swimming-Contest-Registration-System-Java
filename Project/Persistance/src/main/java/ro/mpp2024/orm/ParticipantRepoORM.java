@@ -1,8 +1,10 @@
 package ro.mpp2024.orm;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import ro.mpp2024.IParticipantRepo;
 import ro.mpp2024.domain.Participant;
+import ro.mpp2024.utils.HibernateUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,18 +50,19 @@ public class ParticipantRepoORM implements IParticipantRepo {
 
     @Override
     public Optional<Participant> save(Participant entity) {
-        try {
-
-            HibernateUtil.getSessionFactory().inTransaction(session -> {
-                session.persist(entity);
-                session.flush();
-            });
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.persist(entity);
+            tx.commit();
             return Optional.empty();
         } catch (Exception e) {
+            if (tx != null) tx.rollback();
             System.err.println("Eroare la salvarea participantului: " + e);
             return Optional.of(entity);
         }
     }
+
 
     @Override
     public Optional<Participant> delete(Long id) {

@@ -1,0 +1,104 @@
+/* ProbaTable.css */
+
+/* Font și container principal */
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.ProbaTable {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.ProbaTable table.center {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+/* Header pentru desktop */
+.ProbaTable th,
+.ProbaTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.ProbaTable thead {
+    background-color: #95A5A6;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+}
+
+/* Rânduri alternative (zebra striping) */
+.ProbaTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
+}
+
+/* Stiluri pentru mobil */
+@media screen and (max-width: 767px) {
+    .ProbaTable table,
+    .ProbaTable thead,
+    .ProbaTable tbody,
+    .ProbaTable th,
+    .ProbaTable td,
+    .ProbaTable tr {
+        display: block;
+    }
+
+    /* Ascunde header-ul pe mobil */
+    .ProbaTable thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .ProbaTable tr {
+        margin: 0 0 25px 0;
+        border-radius: 3px;
+        background: #fff;
+        box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
+        padding: 25px 30px;
+    }
+
+    .ProbaTable td {
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+        border: none;
+    }
+
+    .ProbaTable td:before {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        color: #6C7A89;
+    }
+}
+
+/* Butoane (edit / delete etc.) */
+.ProbaTable button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color .25s ease;
+}
+
+.ProbaTable button:hover {
+    background-color: #357ab8;
+}
