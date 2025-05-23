@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ProbaForm.css";
+import "../CSS/ProbaForm.css";
 
 export default function ProbaForm({ addFunc }) {
     const [distanta, setDistanta] = useState("");

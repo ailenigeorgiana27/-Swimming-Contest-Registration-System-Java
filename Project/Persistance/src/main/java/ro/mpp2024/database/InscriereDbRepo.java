@@ -3,7 +3,7 @@ package ro.mpp2024.database;
 import ro.mpp2024.IInscriereRepo;
 import ro.mpp2024.IParticipantRepo;
 import ro.mpp2024.IProbaRepo;
-import ro.mpp2024.JdbcUtils;
+import ro.mpp2024.utils.JdbcUtils;
 import ro.mpp2024.domain.Inscriere;
 import ro.mpp2024.domain.Participant;
 import ro.mpp2024.domain.Proba;

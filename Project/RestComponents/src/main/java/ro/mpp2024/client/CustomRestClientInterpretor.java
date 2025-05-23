@@ -1,4 +1,4 @@
-package ro.mpp2024;
+package ro.mpp2024.client;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;

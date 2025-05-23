@@ -1,4 +1,4 @@
-package ro.mpp2024;
+package ro.mpp2024.utils;
 
 
 import org.apache.logging.log4j.LogManager;

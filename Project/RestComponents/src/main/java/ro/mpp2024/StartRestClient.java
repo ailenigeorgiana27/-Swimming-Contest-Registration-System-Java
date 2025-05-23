@@ -1,5 +1,6 @@
 package ro.mpp2024;
 
+import ro.mpp2024.client.ProbaClient;
 import ro.mpp2024.domain.Proba;
 
 public class StartRestClient {

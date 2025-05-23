@@ -1,7 +1,7 @@
 /*package ro.mpp2024.database;
 
 import ro.mpp2024.IParticipantRepo;
-import ro.mpp2024.JdbcUtils;
+import ro.mpp2024.utils.JdbcUtils;
 import ro.mpp2024.domain.Participant;
 
 import java.sql.Connection;

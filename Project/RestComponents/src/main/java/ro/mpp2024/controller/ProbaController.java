@@ -1,4 +1,4 @@
-package ro.mpp2024;
+package ro.mpp2024.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import ro.mpp2024.IProbaRepo;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5175")
 @RestController
 @RequestMapping("/api/probe")
 public class ProbaController {

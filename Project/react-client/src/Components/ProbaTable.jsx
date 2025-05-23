@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import {getProbe} from "./utils/RestCalls.js";
-import './ProbaTable.css';
-import './App.css';
+import {getProbe} from "../utils/RestCalls.js";
+import '../CSS/ProbaTable.css';
+import '../CSS/App.css';
 
 function ProbaRow({proba, deleteFunction, updateFunction}) {
     const [distanta, setDistanta] = useState(proba.distanta);

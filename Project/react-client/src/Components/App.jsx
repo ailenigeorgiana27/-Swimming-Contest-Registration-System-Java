@@ -1,9 +1,10 @@
-import './App.css'
-import './utils/RestCalls.js'
+import '../CSS/App.css'
+import '../utils/RestCalls.js'
 import {useEffect, useState} from "react";
-import {addProba, deleteProba, getProbe, updateProba} from "./utils/RestCalls.js";
+import {addProba, deleteProba, getProbe, updateProba, Login} from "../utils/RestCalls.js";
 import ProbaTable from "./ProbaTable.jsx";
 import ProbaForm from "./ProbaForm.jsx";
+import LoginPage from "./LoginPage.jsx"
 
 function App() {
     const [probe, setProbe] = useState([]);

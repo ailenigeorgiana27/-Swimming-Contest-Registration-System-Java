@@ -1,4 +1,4 @@
-import { URL } from './Constants.js';
+import { URL, URL_LOGIN } from './Constants.js';
 
 function status(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -98,5 +98,27 @@ export function updateProba(proba) {
             console.error('Eroare PUT:', err);
             return Promise.reject(err);
         });
+}
+
+export function Login(username, password) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append("Content-Type", "application/json");
+    let jsonRequest = {
+        "username": username,
+        "password": password
+    }
+    let myInit = {method: "POST", headers: headers, mode: "cors", body: JSON.stringify(jsonRequest)};
+    let request = new Request(URL_LOGIN, myInit);
+    return fetch(request)
+        .then(status)
+        .then(response => {
+            return response.text();
+        })
+        .catch(err => {
+            console.log(err)
+            return Promise.reject(err);
+        })
+
 }
 

@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.mpp2024.domain.Proba;
-import ro.mpp2024.JdbcUtils;
+import ro.mpp2024.utils.JdbcUtils;
 import ro.mpp2024.IProbaRepo;
 
 import java.sql.*;
